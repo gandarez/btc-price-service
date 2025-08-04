@@ -1,0 +1,72 @@
+{
+    "Data": {
+        "STATS": {
+            "PAGE": 1,
+            "PAGE_SIZE": 10,
+            "TOTAL_ASSETS": 3145
+        },
+        "LIST": [
+            {
+                "ID": 1,
+                "SYMBOL": "BTC",
+                "PRICE_USD": 113907.168087996,
+                "PRICE_USD_LAST_UPDATE_TS": 1754218141
+            },
+            {
+                "ID": 2,
+                "SYMBOL": "ETH",
+                "PRICE_USD": 3483.56905401533,
+                "PRICE_USD_LAST_UPDATE_TS": 1754218141
+            },
+            {
+                "ID": 13,
+                "SYMBOL": "XRP",
+                "PRICE_USD": 2.87429329041395,
+                "PRICE_USD_LAST_UPDATE_TS": 1754218141
+            },
+            {
+                "ID": 7,
+                "SYMBOL": "USDT",
+                "PRICE_USD": 1.00018862042186,
+                "PRICE_USD_LAST_UPDATE_TS": 1754218135
+            },
+            {
+                "ID": 8,
+                "SYMBOL": "BNB",
+                "PRICE_USD": 750.607092526658,
+                "PRICE_USD_LAST_UPDATE_TS": 1754218141
+            },
+            {
+                "ID": 3,
+                "SYMBOL": "SOL",
+                "PRICE_USD": 161.794159381107,
+                "PRICE_USD_LAST_UPDATE_TS": 1754218137
+            },
+            {
+                "ID": 14,
+                "SYMBOL": "USDC",
+                "PRICE_USD": 1.00009464675868,
+                "PRICE_USD_LAST_UPDATE_TS": 1754218140
+            },
+            {
+                "ID": 28,
+                "SYMBOL": "TRX",
+                "PRICE_USD": 0.326770605698632,
+                "PRICE_USD_LAST_UPDATE_TS": 1754218140
+            },
+            {
+                "ID": 26,
+                "SYMBOL": "DOGE",
+                "PRICE_USD": 0.197819930141338,
+                "PRICE_USD_LAST_UPDATE_TS": 1754218140
+            },
+            {
+                "ID": 12,
+                "SYMBOL": "ADA",
+                "PRICE_USD": 0.726014958952661,
+                "PRICE_USD_LAST_UPDATE_TS": 1754218140
+            }
+        ]
+    },
+    "Err": {}
+}
