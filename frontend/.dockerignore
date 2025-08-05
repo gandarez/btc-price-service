@@ -1,0 +1,12 @@
+# Ignore everything
+**
+
+# Source files
+!/public/**
+!/src/**
+
+# Other files
+!next.config.ts
+!package.json
+!package-lock.json
+!tsconfig.json
