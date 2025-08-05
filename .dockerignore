@@ -1,0 +1,14 @@
+# Ignore everything
+**
+
+# Source files
+!/cmd/**
+!/internal/**
+!/pkg/**
+!/configs/**
+
+# Other files
+!.git
+!go.mod
+!go.sum
+!Makefile

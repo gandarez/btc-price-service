@@ -1,0 +1,35 @@
+services:
+  btc-price-service:
+    container_name: btc-price-service
+    ports:
+      - 17020:17020
+    build:
+      context: .
+      dockerfile: Dockerfile
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:17020/v1/liveness || exit 1"]
+      interval: 2s
+      timeout: 2s
+      retries: 5
+      start_period: 1s
+    networks:
+      - btc-price-service-network
+
+  btc-price-frontend:
+    container_name: btc-price-frontend
+    ports:
+      - 17021:3000
+    environment:
+      NODE_ENV: production
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    depends_on:
+      btc-price-service:
+        condition: service_healthy
+    networks:
+      - btc-price-service-network
+
+networks:
+  btc-price-service-network:
+    driver: bridge

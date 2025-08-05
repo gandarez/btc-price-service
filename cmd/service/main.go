@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"path/filepath"
 	"syscall"
 	"time"
 
@@ -29,7 +30,12 @@ func main() {
 	// Initialize logger
 	logger := log.New(os.Stdout)
 
-	cfg, err := config.Load("./configs/.env")
+	cfgPath, err := filepath.Abs("./configs/.env")
+	if err != nil {
+		logger.Fatalf("failed to get absolute path for env file: %s", err)
+	}
+
+	cfg, err := config.Load(cfgPath)
 	if err != nil {
 		logger.Fatalf("failed to load config: %v", err)
 	}
