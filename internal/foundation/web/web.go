@@ -8,11 +8,6 @@ import (
 	"github.com/gandarez/btc-price-service/internal/foundation/log"
 )
 
-type ResponseStream struct {
-	Msg string
-	Err error
-}
-
 // Encoder defines behavior that can encode a data model and provide
 // the content type for that encoding.
 type Encoder interface {
@@ -22,8 +17,7 @@ type Encoder interface {
 // HandlerFunc defines a function type for handling HTTP requests.
 type HandlerFunc func(ctx context.Context, r *http.Request) Encoder
 
-// HandlerFunc defines a function type for handling HTTP requests.
-// type HandlerFuncStream func(ctx context.Context, r *http.Request, out chan ResponseStream)
+// HandlerFuncStream defines a function type for handling HTTP streaming.
 type HandlerFuncStream func(w http.ResponseWriter, r *http.Request)
 
 // App is the main application struct that holds the HTTP mux.
@@ -51,6 +45,7 @@ func (a *App) HandlerFunc(ctx context.Context, method, group, path string, handl
 	if group != "" {
 		finalPath = "/" + group + path
 	}
+
 	finalPath = fmt.Sprintf("%s %s", method, finalPath)
 
 	h := func(w http.ResponseWriter, r *http.Request) {

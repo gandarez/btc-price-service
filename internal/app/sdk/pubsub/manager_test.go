@@ -14,6 +14,7 @@ import (
 
 func TestManager_DataRace(t *testing.T) {
 	m := pubsub.NewManager(2)
+
 	var mu sync.Mutex
 
 	// Start broadcasting updates
@@ -39,7 +40,9 @@ func TestManager_DataRace(t *testing.T) {
 				require.NotNil(t, sub)
 
 				mu.Lock()
+
 				subscribers = append(subscribers, sub)
+
 				mu.Unlock()
 
 				time.Sleep(time.Duration(rand.Intn(50-10)+10) * time.Millisecond) // Simulate some delay

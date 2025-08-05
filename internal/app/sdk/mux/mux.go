@@ -3,6 +3,7 @@ package mux
 import (
 	"context"
 	"net/http"
+	"time"
 
 	"github.com/gandarez/btc-price-service/internal/business/domain/pricebus"
 	"github.com/gandarez/btc-price-service/internal/foundation/web"
@@ -11,7 +12,12 @@ import (
 type (
 	// PriceConfig holds the configuration for the price domain.
 	PriceConfig struct {
-		PriceBus *pricebus.Business
+		BufferTTL                 time.Duration
+		MaxCacheSize              int
+		DefaultExpirationInterval time.Duration
+		PollInterval              time.Duration
+		MaxPeersPerBroadcaster    int
+		PriceBus                  *pricebus.Business
 	}
 
 	// Config holds the configuration for the mux.
