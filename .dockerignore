@@ -7,6 +7,9 @@
 !/pkg/**
 !/configs/**
 
+# integration test files
+!/test/**
+
 # Other files
 !.git
 !go.mod

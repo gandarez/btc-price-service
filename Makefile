@@ -65,3 +65,7 @@ vulncheck:
 .PHONY: test
 test:
 	go test -race -covermode=atomic -coverprofile=coverage.out ./...
+
+.PHONY: test-integration
+test-integration:
+	docker compose down && docker compose run --build --rm integration-test && docker compose down

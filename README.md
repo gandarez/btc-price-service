@@ -32,6 +32,7 @@ This service provides users with the current Bitcoin (BTC) price in USD. It reli
 ## Testing
 
 * Unit tests can be run using `make test`. It also generates a coverage report.
+* Integration tests can be run using `make test-integration`. This will start the service and run the integration tests against it with CoinDesk API mock.
 
 ## Running the Service Locally
 
