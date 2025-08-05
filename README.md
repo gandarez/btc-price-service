@@ -8,7 +8,7 @@ This service provides users with the current Bitcoin (BTC) price in USD. It reli
     * Each update contains the current price in USD and the timestamp of the update.
     * Only changed prices are sent to the clients to minimize data transfer.
 2. Clients automatically reconnects if the connection is lost.
-3. During reconnection, if 'since' is provided, it will send the last N updates based on the timestamp.
+3. During reconnection, if 'since' is provided, it will send the last N updates based on the timestamp and auto-resume the stream.
 4. Cache is enabled by default to reduce API calls and improve response time.
 5. The service has a simple auto-balance mechanism to distribute the broadcasters on subscriptions and unsubscriptions.
 
@@ -61,5 +61,7 @@ This service provides users with the current Bitcoin (BTC) price in USD. It reli
 * Double check the caching strategy for the CoinDesk API, ensuring it respects the 30-second limit for the toplist endpoint.
 * Implement backoff and retry logic for API calls to handle rate limiting and temporary failures.
 * Follow metrics and logging best practices to monitor the service's performance and health and adjust caching and broadcasting values as needed.
+* Prevent panic in the service and ensure it recovers gracefully from unexpected errors, including the http server and all goroutines spawned.
+* Implement middlewares for logging, metrics, and error handling to improve observability and maintainability.
 
 Made with :heart: by Gandarez

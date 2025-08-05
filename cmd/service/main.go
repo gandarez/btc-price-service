@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/signal"
 	"path/filepath"
+	"runtime/debug"
 	"syscall"
 	"time"
 
@@ -51,6 +52,13 @@ func main() {
 
 	logger.Infof("service %s is starting..", cfg.ServiceName)
 	logger.Infof("params: %s", cfg.String())
+
+	// catch panics
+	defer func() {
+		if r := recover(); r != nil {
+			logger.Errorf("panicked: %v. Stack: %s", r, string(debug.Stack()))
+		}
+	}()
 
 	// Initialize price bus
 	coindeskcli := coindeskclient.NewClient(
