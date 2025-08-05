@@ -27,7 +27,7 @@ func NewManager(maxPeersPerBroadcaster int) *Manager {
 func (m *Manager) Subscribe(ctx context.Context) *Subscriber {
 	logger := log.Extract(ctx)
 
-	m.mu.RLock()
+	m.mu.Lock()
 
 	for _, b := range m.pool {
 		if len(b.subscribers) < m.maxPeersPerBroadcaster {
@@ -35,13 +35,13 @@ func (m *Manager) Subscribe(ctx context.Context) *Subscriber {
 
 			sub := b.Subscribe()
 
-			m.mu.RUnlock()
+			m.mu.Unlock()
 
 			return sub
 		}
 	}
 
-	m.mu.RUnlock()
+	m.mu.Unlock()
 
 	m.mu.Lock()
 	defer m.mu.Unlock()

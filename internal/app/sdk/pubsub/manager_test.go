@@ -14,6 +14,16 @@ import (
 
 func TestManager_DataRace(t *testing.T) {
 	m := pubsub.NewManager(2)
+	var mu sync.Mutex
+
+	// Start broadcasting updates
+	go func() {
+		for {
+			m.Broadcast(mockEntity{UpdatedAt: time.Now().UTC()})
+
+			time.Sleep(50 * time.Millisecond)
+		}
+	}()
 
 	subscribers := make([]*pubsub.Subscriber, 0, 100)
 
@@ -28,7 +38,9 @@ func TestManager_DataRace(t *testing.T) {
 				sub := m.Subscribe(t.Context())
 				require.NotNil(t, sub)
 
+				mu.Lock()
 				subscribers = append(subscribers, sub)
+				mu.Unlock()
 
 				time.Sleep(time.Duration(rand.Intn(50-10)+10) * time.Millisecond) // Simulate some delay
 			}()
@@ -36,15 +48,6 @@ func TestManager_DataRace(t *testing.T) {
 	}()
 
 	wg.Wait()
-
-	// Start broadcasting updates
-	go func() {
-		for {
-			m.Broadcast(mockEntity{UpdatedAt: time.Now().UTC()})
-
-			time.Sleep(10 * time.Millisecond)
-		}
-	}()
 
 	// Randomly unsubscribe some subscribers
 	for _, sub := range subscribers {
