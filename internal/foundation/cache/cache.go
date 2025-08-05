@@ -52,6 +52,19 @@ func (b *Buffer[T]) Add(update T) {
 	b.items = append(b.items, update)
 }
 
+// Last returns the last added entity in the buffer.
+func (b *Buffer[T]) Last() T {
+	b.mu.RLock()
+	defer b.mu.RUnlock()
+
+	if len(b.items) == 0 {
+		var zero T
+		return zero
+	}
+
+	return b.items[len(b.items)-1]
+}
+
 // Since retrieves all entities that were updated since the given time.
 // It is safe to call this method concurrently.
 func (b *Buffer[T]) Since(since time.Time) []T {
