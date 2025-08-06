@@ -69,3 +69,7 @@ test:
 .PHONY: test-integration
 test-integration:
 	docker compose down && docker compose run --build --rm integration-test && docker compose down
+
+.PHONY: test-load
+test-load:
+	docker compose down && docker compose run --build --rm load-test && docker compose down

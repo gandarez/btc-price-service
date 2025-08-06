@@ -34,6 +34,10 @@ This service provides users with the current Bitcoin (BTC) price in USD. It reli
 * Unit tests can be run using `make test`. It also generates a coverage report.
 * Integration tests can be run using `make test-integration`. This will start the service and run the integration tests against it with CoinDesk API mock.
 
+## Load Testing
+
+* Load tests can be run using `make test-load`. This will start the service and run load tests against it using the `hey` tool.
+
 ## Running the Service Locally
 
 1. Get an api key from CoinDesk.
@@ -63,5 +67,6 @@ This service provides users with the current Bitcoin (BTC) price in USD. It reli
 * Follow metrics and logging best practices to monitor the service's performance and health and adjust caching and broadcasting values as needed.
 * Prevent panic in the service and ensure it recovers gracefully from unexpected errors, including the http server and all goroutines spawned.
 * Implement middlewares for logging, metrics, and error handling to improve observability and maintainability.
+* Validate configuration values and ensure they are set correctly before starting the service.
 
 Made with :heart: by Gandarez

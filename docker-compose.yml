@@ -7,7 +7,8 @@ services:
       SHUTDOWN_TIMEOUT: 1
       COINDESK_URL: http://mock-coindesk-service:1080
       COINDESK_API_KEY: fake-api-key
-      COINDESK_POLL_INTERVAL: 2
+      COINDESK_POLL_INTERVAL: 5
+      SERVER_READ_HEADER_TIMEOUT: 15
     build:
       context: .
       dockerfile: Dockerfile
@@ -61,6 +62,18 @@ services:
       MOCKSERVER_INITIALIZATION_JSON_PATH: /config/coindesk_expectations.json
     volumes:
       - $PWD/configs/mock/:/config/
+    networks:
+      - btc-price-service-network
+
+  load-test:
+    container_name: load-test
+    build:
+      context: .
+      dockerfile: Dockerfile.test-load
+    command: hey -m GET -c 100 -n 1000 -z 30s -T text/event-stream "http://btc-price-service:17020/v1/price-stream"
+    depends_on:
+      btc-price-service:
+        condition: service_healthy
     networks:
       - btc-price-service-network
 

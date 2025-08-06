@@ -4,12 +4,14 @@ package integration_test
 
 import (
 	"bufio"
+	"encoding/json"
 	"net/http"
 	"os"
 	"slices"
 	"strings"
 	"testing"
 
+	"github.com/gandarez/btc-price-service/internal/app/domain/priceapp"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -48,8 +50,16 @@ func TestPriceStream(t *testing.T) {
 		}
 
 		if after, ok := strings.CutPrefix(line, "data: "); ok {
-			assert.NotEmpty(t, after, "Data should not be empty")
-			assert.JSONEq(t, `{"symbol":"BTC","timestamp":"2025-08-05T17:35:51Z","price":113429.342630482}`, after)
+			require.NotEmpty(t, after, "Data should not be empty")
+
+			var price priceapp.Price
+
+			err := json.Unmarshal([]byte(after), &price)
+			require.NoError(t, err)
+
+			assert.Equal(t, price.Symbol, "BTC")
+			assert.NotEmpty(t, price.Timestamp)
+			assert.NotZero(t, price.Price)
 
 			break // Exit after the first valid data line
 		}

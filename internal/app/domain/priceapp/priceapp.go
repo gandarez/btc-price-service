@@ -59,8 +59,6 @@ func (a *app) startPolling(ctx context.Context) {
 		case <-ctx.Done():
 			return
 		case <-ticker.C:
-			logger.Debugln("polling for asset prices")
-
 			page, err := page.New(1, 100) // Default to page 1 with 100 rows per page
 			if err != nil {
 				logger.Errorf("failed to create pagination: %v", err)
@@ -75,7 +73,7 @@ func (a *app) startPolling(ctx context.Context) {
 
 			update := toAppPrice(price)
 
-			// if cached item is equal to current, then early return
+			// if cached item is equal to current, then do not broadcast
 			if last, ok := a.cache.Last().(Price); ok && last.Price == update.Price {
 				logger.Infof("skipping broadcast for unchanged price: %v", update)
 				continue
